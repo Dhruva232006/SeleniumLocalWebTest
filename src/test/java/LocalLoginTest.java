@@ -10,10 +10,17 @@ import org.testng.annotations.Test;
 public class LocalLoginTest {
     WebDriver driver;
 
+    import org.openqa.selenium.chrome.ChromeOptions;
+
     @BeforeMethod
     public void setUp() {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless=new");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--window-size=1920,1080");
+
+        driver = new ChromeDriver(options);
 
         String page = new File("webpage/login.html")
                 .getAbsoluteFile()
@@ -22,6 +29,7 @@ public class LocalLoginTest {
 
         driver.get(page);
     }
+
 
     @Test
     public void validLoginTest() {
