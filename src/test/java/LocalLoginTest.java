@@ -1,4 +1,5 @@
 import java.io.File;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -9,8 +10,6 @@ import org.testng.annotations.Test;
 
 public class LocalLoginTest {
     WebDriver driver;
-
-    import org.openqa.selenium.chrome.ChromeOptions;
 
     @BeforeMethod
     public void setUp() {
@@ -56,15 +55,15 @@ public class LocalLoginTest {
     @Test
     public void checkBackgroundColor() {
         String bgColor =
-            driver.findElement(By.id("loginBox"))
-                  .getCssValue("background-color");
+                driver.findElement(By.id("loginBox"))
+                .getCssValue("background-color");
 
-        System.out.println("Background Color: " + bgColor);
-        Assert.assertEquals(bgColor, "rgba(173, 216, 230, 1)");
-    }
+      System.out.println("Background Color: " + bgColor);
+      Assert.assertEquals(bgColor, "rgba(173, 216, 230, 1)");
+  }
 
-    @AfterMethod
-    public void tearDown() {
-        driver.quit();
-    }
+  @AfterMethod
+  public void tearDown() {
+      driver.quit();
+  }
 }
