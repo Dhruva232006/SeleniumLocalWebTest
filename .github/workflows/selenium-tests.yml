@@ -1,10 +1,11 @@
+
 name: Selenium Java Tests & Docker Publish
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   selenium-test:
@@ -16,8 +17,8 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          distribution: temurin
+          java-version: "17"
           cache: maven
 
       - name: Set up Chrome
@@ -31,11 +32,11 @@ jobs:
       - name: Run Selenium tests
         run: mvn clean test
 
-  # NEW JOB: Executes sequentially only after validation tests pass perfectly
   build-and-publish-docker:
     needs: selenium-test
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' # Only push to registry on formal merges/pushes
+    if: github.event_name == 'push'
+
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
@@ -43,8 +44,8 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets::DOCKERHUB_USERNAME }}
-          password: ${{ secrets::DOCKERHUB_TOKEN }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -58,3 +59,4 @@ jobs:
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/selenium-testng-automation:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/selenium-testng-automation:${{ github.sha }}
+
