@@ -1,5 +1,5 @@
 # Step 1: Use an official Maven image with JDK 17 to build and bundle the app
-FROM maven:3.8.6-openjdk-17-slim AS build
+FROM maven:3.9-eclipse-temurin-17 AS build
 WORKDIR /app
 
 # Copy the build configuration and source code
@@ -13,7 +13,7 @@ RUN mvn dependency:go-offline -B
 RUN mvn test-compile
 
 # Step 2: Use a slim runtime image containing Chrome for execution headless environment
-FROM openjdk:17-slim
+FROM eclipse-temurin:17-jdk-jammy
 WORKDIR /app
 
 # Install stable Chrome dependencies required for headless Selenium runs
